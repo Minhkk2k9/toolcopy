@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Sao Chép Nội Dung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        textarea, input {
+            width: 80%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            white-space: pre-line;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Tool Sao Chép Nội Dung Nhiều Lần</h2>
+
+    <textarea id="content" rows="4" placeholder="Nhập nội dung cần sao chép..."></textarea>
+    <br>
+    <input type="number" id="times" placeholder="Nhập số lần sao chép..." min="1">
+    <br>
+    <button onclick="generateText()">Tạo Nội Dung</button>
+    <button onclick="copyText()">Copy Nội Dung</button>
+
+    <div id="output"></div>
+
+    <script>
+        function generateText() {
+            let content = document.getElementById("content").value;
+            let times = parseInt(document.getElementById("times").value);
+
+            if (!content || isNaN(times) || times < 1) {
+                alert("Vui lòng nhập nội dung và số lần hợp lệ!");
+                return;
+            }
+
+            let result = content.repeat(times) + "\n";
+            document.getElementById("output").textContent = result;
+        }
+
+        function copyText() {
+            let outputDiv = document.getElementById("output");
+            let text = outputDiv.textContent;
+
+            if (!text) {
+                alert("Không có nội dung để sao chép!");
+                return;
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Đã sao chép nội dung!");
+            }).catch(err => {
+                alert("Lỗi khi sao chép: " + err);
+            });
+        }
+    </script>
+
+</body>
+</html>
